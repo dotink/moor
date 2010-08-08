@@ -17,16 +17,16 @@ class MoorActionController extends MoorAbstractController  {
 	 */
 	public function __construct() {
 		$this->beforeAction();
-		
+
 		try {
 		    parent::__construct();
-		
+
 		} catch (Exception $e) {
-		    
+
 		    $exception = new ReflectionClass($e);
 
 		    while($exception) {
-    		    // pass exceptions to a __catch_ExceptionClass method 
+    		    // pass exceptions to a __catch_ExceptionClass method
     		    $magic_exception_catcher = "catch" . $exception->getName();
 				if (is_callable(array($this, $magic_exception_catcher))) {
 					call_user_func_array(array($this, $magic_exception_catcher), array($e));
@@ -34,15 +34,15 @@ class MoorActionController extends MoorAbstractController  {
 				}
 				$exception = $exception->getParentClass();
 			}
-			
+
  			if (!$exception) {
                 throw $e;
             }
 		}
-		
+
 		$this->afterAction();
 	}
-	
+
 	protected function beforeAction() {}
 	protected function afterAction() {}
 }
@@ -53,9 +53,9 @@ class MoorActionController extends MoorAbstractController  {
 
 // Moor - A URL Routing/Linking/Controller library for PHP 5
 
-// 
+//
 // Copyright (c) 2010 Jeff Turcotte
-// 
+//
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
 // files (the "Software"), to deal in the Software without
@@ -64,10 +64,10 @@ class MoorActionController extends MoorAbstractController  {
 // copies of the Software, and to permit persons to whom the
 // Software is furnished to do so, subject to the following
 // conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
 // OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
