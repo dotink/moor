@@ -12,16 +12,7 @@
  * @version    1.0.0b4
  */
 class MoorAbstractController {
-	/**
-	 * Create an instance to encapsulate all controller logic
-	 *
-	 * @return void
-	 */
-	public function __construct() {
-		call_user_func(array(
-			$this, Moor::getActiveShortMethod()
-		));
-	}
+
 }
 
 // ===========
