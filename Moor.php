@@ -428,6 +428,26 @@ class Moor {
 	}
 
 	/**
+	 * Returns the proxy URI for the currently running route
+	 *
+	 * @return string
+	 */
+	public static function getActiveProxyURI()
+	{
+		return self::$active_proxy_uri;
+	}
+
+	/**
+	 * Returns the request path for the current request
+	 *
+	 * @return string
+	 */
+	public static function getRequestPath()
+	{
+		return self::$request_path;
+	}
+
+	/**
 	 * Get the path to the supplied callback
 	 *
 	 * @param string $callback
