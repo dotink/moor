@@ -61,6 +61,13 @@ class Moor {
 	private static $active_function = NULL;
 
 	/**
+	 * The currently active proxy URI
+	 *
+	 * @var string
+	 */
+	private static $active_proxy_uri = NULL;
+
+	/**
 	 * The camelize() cache
 	 *
 	 * @var array
@@ -303,6 +310,10 @@ class Moor {
 			$url .= '?' . http_build_query($excluded_params);
 		}
 
+		if (isset(self::$active_proxy_uri)) {
+			$url = self::$active_proxy_uri . $url;
+		}
+
 		return $url;
 	}
 
@@ -520,7 +531,14 @@ class Moor {
 	public static function run()
 	{
 		self::$running = TRUE;
-		self::$request_path = urldecode(preg_replace('#\?.*$#', '', $_SERVER['REQUEST_URI']));
+
+		if (!empty($_SERVER['PATH_INFO'])) {
+			self::$active_proxy_uri = str_replace($_SERVER['PATH_INFO'], '', $_SERVER['REQUEST_URI']);
+			self::$request_path     = urldecode(preg_replace('#\?.*$#', '', $_SERVER['PATH_INFO']));
+		} else {
+			self::$request_path     = urldecode(preg_replace('#\?.*$#', '', $_SERVER['REQUEST_URI']));
+		}
+
 
 		$old_GET = $_GET;
 		$_GET = array();
