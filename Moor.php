@@ -1277,12 +1277,6 @@ class MoorProgrammerException extends MoorException {}
 class MoorContinueException extends MoorException {}
 class MoorNotFoundException extends MoorException {}
 
-// ============
-// = Includes =
-// ============
-
-require 'MoorAbstractController.php';
-require 'MoorActionController.php';
 
 // ===========
 // = License =
