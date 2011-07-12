@@ -136,6 +136,13 @@ class Moor {
 	 * @var string
 	 **/
 	private static $request_path = NULL;
+	
+	/**
+	 * Restless URLs
+	 *
+	 * @var boolean
+	 */
+	private static $restless_urls = FALSE;
 
 	/**
 	 * All routes in their compiled form
@@ -180,6 +187,17 @@ class Moor {
 		self::$debug = TRUE;
 		return self::getInstance();
 
+	}
+	
+	/**
+	 * Enable automatic redirecting for added/missing slashes at the end of
+	 * the request path
+	 *
+	 * @return void
+	 */
+	public static function enableRestlessURLs()
+	{
+		self::$restless_urls = TRUE;
 	}
 
 	/**
@@ -738,6 +756,21 @@ class Moor {
 	private static function dispatchRoute($route)
 	{
 		if (!preg_match($route->url->pattern, self::$request_path, $matches)) {
+			if (self::$restless_urls) {
+				$rev      = strrev(self::$request_path);
+				$try_path = ($rev{0} == '/')
+					? substr(self::$request_path, 0, -1)
+					: self::$request_path . '/';
+
+				if (preg_match($route->url->pattern, $try_path)) {
+					$new_location = (!empty($_SERVER['PATH_INFO']))
+						? self::$active_proxy_uri . $try_path
+						: $try_path;
+					header('Location: ' . $new_location, TRUE, 301);
+					exit();
+				}
+			}
+
 			return FALSE;
 		}
 
