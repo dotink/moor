@@ -137,7 +137,7 @@ class Moor {
 	 * @var string
 	 **/
 	private static $request_path = NULL;
-	
+
 	/**
 	 * Restless URLs
 	 *
@@ -189,7 +189,7 @@ class Moor {
 		return self::getInstance();
 
 	}
-	
+
 	/**
 	 * Enable automatic redirecting for added/missing slashes at the end of
 	 * the request path
@@ -250,7 +250,7 @@ class Moor {
 						$low_dist > $dist ||
 						$low_dist == $dist && $top_accu < $accu ||
 						$low_dist == $dist && $top_accu == $accu && $top_sect < $sect ||
-						$low_dist == $dist && $top_accu == $accu && $top_sect <= $sect && $low_diff > $diff 
+						$low_dist == $dist && $top_accu == $accu && $top_sect <= $sect && $low_diff > $diff
 					);
 
 					if ($is_best) {
@@ -482,7 +482,7 @@ class Moor {
 	{
 		return self::$not_found_callback;
 	}
-	
+
 	/**
 	 * Get the path to the supplied callback
 	 *
@@ -620,7 +620,7 @@ class Moor {
 		}
 
 		self::$messages[] = 'No Valid Matches Found. Running Not Found callback: ' . self::$not_found_callback;
-		
+
 		$route = (object) 'route';
 		$route->url      = self::parseUrl('*');
 		$route->callback = self::parseCallback(self::$not_found_callback);
@@ -1092,7 +1092,7 @@ class Moor {
 			str_replace('\\', '\\\\', $ds).'$1',
 			$string
 		);
-		
+
 		$pieces = explode($ds, $string);
 		foreach($pieces as $n => $piece) {
 			$pieces[$n] = self::underscorize($piece);
@@ -1167,13 +1167,13 @@ class Moor {
 		$url = (object) $url_string;
 		$url->shorthand = trim($url_string);
 		$url->pattern   = str_replace('#', '\\#', $url->shorthand);
-		
+
 		// determine whether we should match from beginning
 		// to end of the url, or one or the other, or not at all
 
 		$match_start = TRUE;
 		$match_end   = TRUE;
-		
+
 		if ($url->scalar == '*') {
 			$url->pattern   = '.*';
 			$url->shorthand = '';
@@ -1314,7 +1314,7 @@ class Moor {
 			self::triggerContinue();
 		}
 
-		if (!$class->isSubclassOf('MoorAbstractController')) {
+		if (!$class->isSubclassOf('MoorBaseController')) {
 			self::$messages[] = 'Continue. Class for method ' . $callback . '. isn\'t a subclass of MoorAbstractController.';
 			self::triggerContinue();
 		}
@@ -1344,6 +1344,9 @@ class MoorNotFoundException extends MoorException {}
 // = Includes =
 // ============
 
+if (!class_exists('MoorBaseController', FALSE)) {
+	require 'MoorBaseController.php';
+}
 if (!class_exists('MoorAbtractController', FALSE)) {
 	require 'MoorAbstractController.php';
 }
@@ -1356,9 +1359,9 @@ if (!class_exists('MoorActionController', FALSE)) {
 // ===========
 
 // Moor - a routing, linking and controller library for PHP5
-// 
+//
 // Copyright (c) 2010-2011 Jeff Turcotte, others
-// 
+//
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
 // files (the "Software"), to deal in the Software without

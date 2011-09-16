@@ -1,6 +1,6 @@
 <?php
 /**
- * Built-in Abstract Controller for Moor, a URL Routing/Linking/Controller library for PHP 5
+ * Built-in Base Controller for Moor, a URL Routing/Linking/Controller library for PHP 5
  *
  * *** All valid Controllers must extend MoorAbstractController ***
  *
@@ -11,17 +11,8 @@
  * @link       http://github.com/jeffturcotte/moor
  * @version    1.0.0b4
  */
-class MoorAbstractController {
-	/**
-	 * Create an instance to encapsulate all controller logic
-	 *
-	 * @return void
-	 */
-	public function __construct() {
-		call_user_func(array(
-			$this, Moor::getActiveShortMethod()
-		));
-	}
+class MoorBaseController {
+
 }
 
 // ===========
