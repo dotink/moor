@@ -2,7 +2,7 @@
 /**
  * Built-in Base Controller for Moor, a URL Routing/Linking/Controller library for PHP 5
  *
- * *** All valid Controllers must extend MoorAbstractController ***
+ * *** All valid Controllers must extend MoorBaseController ***
  *
  * @copyright  Copyright (c) 2010 Jeff Turcotte
  * @author     Jeff Turcotte [jt] <jeff.turcotte@gmail.com>
@@ -11,9 +11,7 @@
  * @link       http://github.com/jeffturcotte/moor
  * @version    1.0.0b4
  */
-class MoorBaseController {
-
-}
+class MoorBaseController {}
 
 // ===========
 // = License =
