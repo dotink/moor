@@ -15,11 +15,11 @@ class MoorActionController extends MoorAbstractController  {
 	 *
 	 * @return void
 	 */
-	public function __construct() {
+	public function __construct(&$return_value = NULL) {
 		$this->beforeAction();
 
 		try {
-		    parent::__construct();
+		    parent::__construct($return_value);
 
 		} catch (Exception $e) {
 

@@ -877,8 +877,8 @@ class Moor {
 			if (self::$active_class instanceof MoorAbstractController) {
 				self::$messages[] = 'Instantiating class for ' . $callback_string;
 				$method           = Moor::getActiveShortMethod();
-				$controller       = new $class();
-				return $controller->$method();
+				$controller       = new $class($return_value);
+				return $return_value;
 			} else {
 				self::$messages[] = 'Calling static method: ' . $callback_string;
 				return call_user_func(self::compat($callback_string));
@@ -1364,9 +1364,14 @@ class MoorNotFoundException   extends MoorException {}
 // = Includes =
 // ============
 
+if (!class_exists('MoorBaseController', FALSE)) {
+	require 'MoorBaseController.php';
+}
+
 if (!class_exists('MoorAbtractController', FALSE)) {
 	require 'MoorAbstractController.php';
 }
+
 if (!class_exists('MoorActionController', FALSE)) {
 	require 'MoorActionController.php';
 }
