@@ -17,161 +17,161 @@ class Moor {
 	 *
 	 * @var string
 	 */
-	private static $active_callback = NULL;
+	static private $active_callback = NULL;
 
 	/**
 	 * The currently running namespace
 	 *
 	 * @var string
 	 */
-	private static $active_namespace = NULL;
+	static private $active_namespace = NULL;
 
 	/**
 	 * The currently running class (w/ namespace)
 	 *
 	 * @var string
 	 */
-	private static $active_class = NULL;
+	static private $active_class = NULL;
 
 	/**
 	 * The currently running class (w/o namespace)
 	 *
 	 * @var string
 	 */
-	private static $active_short_class = NULL;
+	static private $active_short_class = NULL;
 
 	/**
 	 * The currently running method (w/ namespace & class)
 	 *
 	 * @var string
 	 */
-	private static $active_method = NULL;
+	static private $active_method = NULL;
 
 	/**
 	 * The currently running method (w/o namespace or class)
 	 *
 	 * @var string
 	 */
-	private static $active_short_method = NULL;
+	static private $active_short_method = NULL;
 
 	/**
 	 * The currently running function
 	 *
 	 * @var string
 	 */
-	private static $active_function = NULL;
+	static private $active_function = NULL;
 
 	/**
 	 * The currently active proxy URI
 	 *
 	 * @var string
 	 */
-	private static $active_proxy_uri = NULL;
+	static private $active_proxy_uri = NULL;
 
 	/**
 	 * The camelize() cache
 	 *
 	 * @var array
 	 */
-	private static $camelize = array();
+	static private $camelize = array();
 
 	/**
 	 * Default pattern to match :id params in incoming urls
 	 *
 	 * @var string
 	 */
-	private static $default_request_param_pattern = '[A-Za-z0-9_]+';
+	static private $default_request_param_pattern = '[A-Za-z0-9_]+';
 
 	/**
 	 * Whether or not to show debug messages on default 404 page
 	 *
 	 * @var boolean
 	 **/
-	private static $debug = FALSE;
+	static private $debug = FALSE;
 
 	/**
 	 * Wether or not to cache with APC
 	 *
 	 * @var boolean
 	 **/
-	private static $enable_cache = FALSE;
+	static private $enable_cache = FALSE;
 
 	/**
 	 * The current more instance, only used for chaining
 	 *
 	 * @var object Moor
 	 */
-	private static $instance = NULL;
+	static private $instance = NULL;
 
 	/**
 	 * The linkTo() cache
 	 *
 	 * @var array
 	 */
-	private static $link_to = array();
+	static private $link_to = array();
 
 	/**
 	 * Debug messages
 	 *
 	 * @var array
 	 **/
-	private static $messages = array();
+	static private $messages = array();
 
 	/**
 	 * The 404 callback to run upon no route matches
 	 *
 	 * @var string
 	 **/
-	private static $not_found_callback = 'Moor::routeNotFoundCallback';
+	static private $not_found_callback = 'Moor::routeNotFoundCallback';
 
 	/**
 	 * The paramsTo() cache
 	 *
 	 * @var array
 	 */
-	private static $params_to = array();
+	static private $params_to = array();
 
 	/**
 	 * The request path
 	 *
 	 * @var string
 	 **/
-	private static $request_path = NULL;
+	static private $request_path = NULL;
 
 	/**
 	 * Restless URLs
 	 *
 	 * @var boolean
 	 */
-	private static $restless_urls = FALSE;
+	static private $restless_urls = FALSE;
 
 	/**
 	 * All routes in their compiled form
 	 *
 	 * @var array
 	 **/
-	private static $routes = array();
+	static private $routes = array();
 
 	/**
 	 * Whether or not the router is running
 	 *
 	 * @var boolean
 	 */
-	private static $running = FALSE;
+	static private $running = FALSE;
 
 	/**
 	 * The underscore() cache
 	 *
 	 * @var array
 	 */
-	private static $underscorize = array();
+	static private $underscorize = array();
 
 	/**
 	 * The prefix to add to $url_string when calling ::route()
 	 *
 	 * @var string
 	 */
-	private static $url_prefix = '';
+	static private $url_prefix = '';
 
 
 	// ==============
@@ -183,7 +183,7 @@ class Moor {
 	 *
 	 * @return object  The Moor instance for chaining
 	 **/
-	public static function enableDebug()
+	static public function enableDebug()
 	{
 		self::$debug = TRUE;
 		return self::getInstance();
@@ -196,7 +196,7 @@ class Moor {
 	 *
 	 * @return void
 	 */
-	public static function enableRestlessURLs()
+	static public function enableRestlessURLs()
 	{
 		self::$restless_urls = TRUE;
 	}
@@ -208,7 +208,7 @@ class Moor {
 	 * @param  string $params          The GET params to send
 	 * @return string The URL
 	 */
-	public static function linkTo($key)
+	static public function linkTo($key)
 	{
 		$param_values    = func_get_args();
 		$callback_string = array_shift($param_values);
@@ -348,7 +348,7 @@ class Moor {
 	 *
 	 * @return boolean
 	 */
-	public static function getDebug()
+	static public function getDebug()
 	{
 		return self::$debug;
 	}
@@ -358,7 +358,7 @@ class Moor {
 	 *
 	 * @return array
 	 **/
-	public static function getMessages()
+	static public function getMessages()
 	{
 		return self::$messages;
 	}
@@ -368,7 +368,7 @@ class Moor {
 	 *
 	 * @return string
 	 */
-	public static function getActiveCallback()
+	static public function getActiveCallback()
 	{
 		return self::$active_callback;
 	}
@@ -378,7 +378,7 @@ class Moor {
 	 *
 	 * @return string
 	 **/
-	public static function getActiveClass()
+	static public function getActiveClass()
 	{
 		return self::$active_class;
 	}
@@ -388,7 +388,7 @@ class Moor {
 	 *
 	 * @return string
 	 */
-	public static function getActiveClassPath()
+	static public function getActiveClassPath()
 	{
 		return self::pathTo(self::getActiveClass());
 	}
@@ -398,7 +398,7 @@ class Moor {
 	 *
 	 * @return string
 	 */
-	public static function getActiveFunction()
+	static public function getActiveFunction()
 	{
 		return self::$active_function;
 	}
@@ -408,7 +408,7 @@ class Moor {
 	 *
 	 * @return string
 	 */
-	public static function getActiveMethod()
+	static public function getActiveMethod()
 	{
 		return self::$active_method;
 	}
@@ -418,7 +418,7 @@ class Moor {
 	 *
 	 * @return string
 	 */
-	public static function getActiveNamespace()
+	static public function getActiveNamespace()
 	{
 		return self::$active_namespace;
 	}
@@ -428,7 +428,7 @@ class Moor {
 	 *
 	 * @return string
 	 */
-	public static function getActiveShortClass()
+	static public function getActiveShortClass()
 	{
 		return self::$active_short_class;
 	}
@@ -438,7 +438,7 @@ class Moor {
 	 *
 	 * @return string
 	 */
-	public static function getActiveShortMethod()
+	static public function getActiveShortMethod()
 	{
 		return self::$active_short_method;
 	}
@@ -448,7 +448,7 @@ class Moor {
 	 *
 	 * @return string
 	 */
-	public static function getActivePath()
+	static public function getActivePath()
 	{
 		return self::pathTo(self::getActiveCallback());
 	}
@@ -458,7 +458,7 @@ class Moor {
 	 *
 	 * @return string
 	 */
-	public static function getActiveProxyURI()
+	static public function getActiveProxyURI()
 	{
 		return self::$active_proxy_uri;
 	}
@@ -468,7 +468,7 @@ class Moor {
 	 *
 	 * @return string
 	 */
-	public static function getRequestPath()
+	static public function getRequestPath()
 	{
 		return self::$request_path;
 	}
@@ -478,7 +478,7 @@ class Moor {
 	 *
 	 * @return callback  The callback to use for executing the not found functionality
 	 **/
-	public static function getNotFoundCallback()
+	static public function getNotFoundCallback()
 	{
 		return self::$not_found_callback;
 	}
@@ -490,7 +490,7 @@ class Moor {
 	 * @param string $directory_separator
 	 * @return void
 	 */
-	public static function pathTo($callback, $directory_separator=NULL)
+	static public function pathTo($callback, $directory_separator=NULL)
 	{
 		$string = self::expandCallback($callback);
 		return self::makePath($string, $directory_separator);
@@ -503,7 +503,7 @@ class Moor {
 	 * @param string $callback The callback to search for
 	 * @return array The params
 	 */
-	public static function paramsTo($callback)
+	static public function paramsTo($callback)
 	{
 		$callback = self::expandCallback($callback);
 
@@ -537,7 +537,7 @@ class Moor {
 	 * @param  closure         $function        An optional closure, named by the previous argument (for linking)
 	 * @return object The Moor instance for chaining
 	 */
-	public static function route($url_string, $callback_string, $function=NULL)
+	static public function route($url_string, $callback_string, $function=NULL)
 	{
 		// reset caches using routes
 		self::$link_to = array();
@@ -580,11 +580,31 @@ class Moor {
 	}
 
 	/**
+	 * The default 404 Not Found callback. Prints debug messages if they are on.
+	 *
+	 * @return void
+	 */
+	public static function routeNotFoundCallback()
+	{
+		header('HTTP/1.1 404 Not Found');
+		header('Content-Type: text/html');
+
+		echo '<h1>NOT FOUND</h1>';
+
+		if (self::$debug) {
+			echo '<p>Chances are you have not configured or added any routes.</p>';
+			echo '<h2>Moor Debug</h2>';
+			echo "\n\n";
+			echo join("<br />\n", self::$messages);
+		}
+	}
+
+	/**
 	 * Starts routing
 	 *
 	 * @return void
 	 */
-	public static function run()
+	static public function run()
 	{
 		self::$running = TRUE;
 
@@ -594,7 +614,6 @@ class Moor {
 		} else {
 			self::$request_path     = urldecode(preg_replace('#\?.*$#', '', $_SERVER['REQUEST_URI']));
 		}
-
 
 		$old_GET = $_GET;
 		$_GET = array();
@@ -611,7 +630,7 @@ class Moor {
 			$_GET = $old_GET;
 
 			try {
-				self::dispatchRoute($route);
+				return self::dispatchRoute($route);
 			} catch (MoorContinueException $e) {
 				continue;
 			} catch (MoorNotFoundException $e) {
@@ -625,7 +644,7 @@ class Moor {
 		$route->url      = self::parseUrl('*');
 		$route->callback = self::parseCallback(self::$not_found_callback);
 		$route->function = NULL;
-		self::dispatchRoute($route);
+		return self::dispatchRoute($route);
 	}
 
 	/**
@@ -634,7 +653,7 @@ class Moor {
 	 * @param string $pattern  The regular expression to match a request param in the URL
 	 * @return object  The Moor instance for chaining
 	 **/
-	public static function setRequestParamPattern($pattern)
+	static public function setRequestParamPattern($pattern)
 	{
 		self::$default_request_param_pattern = $pattern;
 		return self::getInstance();
@@ -646,7 +665,7 @@ class Moor {
 	 * @param string $callback  The static method or function callback for 404s
 	 * @return object  The Moor instance for chaining
 	 **/
-	public static function setNotFoundCallback($callback)
+	static public function setNotFoundCallback($callback)
 	{
 		self::$not_found_callback = $callback;
 		return self::getInstance();
@@ -658,7 +677,7 @@ class Moor {
 	 * @param string $prefix  The string to prefix
 	 * @return object  The Moor instance for chaining
 	 **/
-	public static function setUrlPrefix($prefix)
+	static public function setUrlPrefix($prefix)
 	{
 		self::$url_prefix = $prefix;
 		return self::getInstance();
@@ -669,7 +688,7 @@ class Moor {
 	 *
 	 * @return void
 	 */
-	public static function triggerContinue()
+	static public function triggerContinue()
 	{
 		throw new MoorContinueException();
 	}
@@ -679,7 +698,7 @@ class Moor {
 	 *
 	 * @return void
 	 */
-	public static function triggerNotFound()
+	static public function triggerNotFound()
 	{
 		throw new MoorNotFoundException();
 	}
@@ -725,7 +744,7 @@ class Moor {
 	 * @param  boolean $upper    If the camel case should be `UpperCamelCase`
 	 * @return string  The converted string
 	 */
-	private static function &camelize($original, $upper=FALSE)
+	static private function &camelize($original, $upper=FALSE)
 	{
 		$upper = (int) $upper;
 		$key   = "{$upper}/{$original}";
@@ -760,7 +779,7 @@ class Moor {
 	 * @param callback $callback  The callback to make compatible
 	 * @return callback  A callback that is compatibile with PHP 5.1
 	 */
-	private static function compat($callback)
+	static private function compat($callback)
 	{
 		if (is_string($callback) && strpos($callback, '::') !== FALSE) {
 			$callback = explode('::', $callback);
@@ -774,7 +793,7 @@ class Moor {
 	 * @param object $route a route stdObject
 	 * @return void
 	 **/
-	private static function dispatchRoute($route)
+	static private function dispatchRoute($route)
 	{
 		if (!preg_match($route->url->pattern, self::$request_path, $matches)) {
 			if (self::$restless_urls) {
@@ -795,7 +814,11 @@ class Moor {
 			return FALSE;
 		}
 
-		self::$messages[] = 'Match. Request path ' . self::$request_path . ' matched URL definition "' . $route->url->scalar . '"';
+		self::$messages[] = sprintf(
+			'Match. Request path %s matched URL definition "%s"',
+			self::$request_path,
+			$route->url->scalar
+		);
 
 		foreach($matches as $name => $param) {
 			if (is_string($name)) {
@@ -809,16 +832,18 @@ class Moor {
 
 		self::$active_callback = $callback_string;
 
-		// dispatch closure
 		if ($route->function instanceof Closure) {
+			//
+			// dispatch closure
+			//
 			self::$active_function = $callback_string;
 			self::$messages[] = 'Calling assigned closure';
-			call_user_func(self::compat($route->function));
-			exit();
+			return call_user_func(self::compat($route->function));
 
-		// dispatch function
 		} else if (function_exists($callback_string)) {
-			// disallow dangerous functions
+			//
+			// dispatch function, disallowing dangerous functions
+			//
 			if (preg_match('/^[\*_\\\\]+$/', $route->callback->finder)) {
 				self::$messages[] = 'Skipping callback ' . $callback_string . ': Callback definition is dangerous.';
 				self::triggerContinue();
@@ -832,33 +857,31 @@ class Moor {
 			self::$active_function  = $callback_string;
 
 			self::$messages[] = 'Calling function: ' . $callback_string;
-			call_user_func($callback_string);
-			exit();
+			return call_user_func($callback_string);
 
-		// dispatch method
 		} else {
+			//
+			// dispatch method
+			//
 			self::validateMethodCallback($callback_string);
-			$method = new ReflectionMethod($callback_string);
 
-			$class = self::compat($callback_string);
-			$class = $class[0];
+			list($class, $method) = self::compat($callback_string);
+			$parsed_class         = self::parseClass($class);
 
-			$parsed_class = self::parseClass($class);
+			self::$active_method       = $callback_string;
+			self::$active_short_method = $method;
+			self::$active_class        = $class;
+			self::$active_short_class  = $parsed_class['short_class'];
+			self::$active_namespace    = $parsed_class['namespace'];
 
-			self::$active_method = $callback_string;
-			self::$active_short_method = $method->getName();
-			self::$active_class = $class;
-			self::$active_short_class = $parsed_class['short_class'];
-			self::$active_namespace = $parsed_class['namespace'];
-
-			if ($method->isStatic()) {
-				self::$messages[] = 'Calling static method: ' . $callback_string;
-				call_user_func(self::compat($callback_string));
-				exit();
-			} else {
+			if (self::$active_class instanceof MoorAbstractController) {
 				self::$messages[] = 'Instantiating class for ' . $callback_string;
-				new $class();
-				exit();
+				$method           = Moor::getActiveShortMethod();
+				$controller       = new $class();
+				return $controller->$method();
+			} else {
+				self::$messages[] = 'Calling static method: ' . $callback_string;
+				return call_user_func(self::compat($callback_string));
 			}
 		}
 
@@ -872,7 +895,7 @@ class Moor {
 	 * @param string  $callback
 	 * @return string The expanded callback
 	 */
-	private static function expandCallback($callback) {
+	static private function expandCallback($callback) {
 		$string = $callback;
 
 		if (strpos($callback, '*::') === 0) {
@@ -892,7 +915,7 @@ class Moor {
 	 * @param string $string  A url or callback string from route()
 	 * @return array  An array of callback params in stdObject form
 	 */
-	private static function &extractCallbackParams($string)
+	static private function &extractCallbackParams($string)
 	{
 		$callback_params = array();
 
@@ -980,7 +1003,7 @@ class Moor {
 	 * @param string $url_string  A url string from route()
 	 * @return array  An array of request params in stdObject form
 	 */
-	private static function &extractRequestParams($url_string)
+	static private function &extractRequestParams($url_string)
 	{
 		$request_params = array();
 
@@ -1013,9 +1036,10 @@ class Moor {
 				}
 
 				if ($parens != 0) {
-					throw new MoorProgrammerException(
-						'Supplied URL: ' . $url_string . ', contains mismatched request param pattern parenthesis'
-					);
+					throw new MoorProgrammerException(sprintf(
+						'Supplied URL: %s, contains mismatched request param pattern parenthesis',
+						$url_string
+					));
 				}
 
 				$request_param->search .= $pattern;
@@ -1036,11 +1060,12 @@ class Moor {
 	 *
 	 * @return void
 	 */
-	private static function getInstance()
+	static private function getInstance()
 	{
 		if (self::$instance) {
 			return self::$instance;
 		}
+
 		return self::$instance = new self();
 	}
 
@@ -1050,7 +1075,7 @@ class Moor {
 	 * @param object $callback  A callback stdObject
 	 * @return string  The injected callback string
 	 */
-	private static function injectParamsIntoCallback($callback)
+	static private function injectParamsIntoCallback($callback)
 	{
 		$callback_string = $callback->shorthand;
 
@@ -1070,7 +1095,7 @@ class Moor {
 	 * @param string $string
 	 * @return string  The lowerCamelCase version of the string
 	 */
-	private static function lowerCamelize($string)
+	static private function lowerCamelize($string)
 	{
 		return self::camelize($string);
 	}
@@ -1081,7 +1106,7 @@ class Moor {
 	 * @param string $callback_string
 	 * @return string  The path created from the callback
 	 */
-	private static function makePath($callback_string, $ds=NULL)
+	static private function makePath($callback_string, $ds=NULL)
 	{
 		$ds = ($ds === NULL) ? DIRECTORY_SEPARATOR : $ds;
 
@@ -1107,7 +1132,7 @@ class Moor {
 	 * @param  string $callback_string The callback
 	 * @return object The callback object
 	 */
-	private static function parseCallback($callback_string)
+	static private function parseCallback($callback_string)
 	{
 		$callback = (object) trim($callback_string, '\\');
 
@@ -1135,7 +1160,7 @@ class Moor {
 	 * @param string class  The class to parse
 	 * @return array  An array of the namespace and short class name
 	 */
-	private static function parseClass($class)
+	static private function parseClass($class)
 	{
 		$namespace = NULL;
 		$short_class = $class;
@@ -1162,7 +1187,7 @@ class Moor {
 	 * @param  string $url_string    The URL string (either shorthand or a regular expression)
 	 * @return object The URL object
 	 */
-	private static function parseUrl($url_string)
+	static private function parseUrl($url_string)
 	{
 		$url = (object) $url_string;
 		$url->shorthand = trim($url_string);
@@ -1209,24 +1234,6 @@ class Moor {
 	}
 
 	/**
-	 * The default 404 Not Found callback. Prints debug messages if they are on.
-	 *
-	 * @return void
-	 */
-	protected static function routeNotFoundCallback()
-	{
-		header("HTTP/1.1 404 Not Found");
-		echo '<h1>NOT FOUND</h1>';
-		echo "\n\n";
-
-		if (self::$debug) {
-			echo '<h2>Moor Debug</h2>';
-			echo "\n\n";
-			echo join("<br />\n", self::$messages);
-		}
-	}
-
-	/**
 	 * Converts a `camelCase` or `underscore_notation` string to `underscore_notation`
 	 *
 	 * Derived from MIT fGrammer::camelize
@@ -1255,7 +1262,7 @@ class Moor {
 	 * @param  string $string  The string to convert
 	 * @return string  The converted string
 	 */
-	private static function &underscorize($string)
+	static private function &underscorize($string)
 	{
 		$key = $string;
 
@@ -1293,7 +1300,7 @@ class Moor {
 	 * @param string $string
 	 * @return string  The upperCamelCase version of the string
 	 */
-	private static function upperCamelize($string)
+	static private function upperCamelize($string)
 	{
 		return self::camelize($string, TRUE);
 	}
@@ -1304,28 +1311,41 @@ class Moor {
 	 * @param string $callback  the callback string
 	 * @return void
 	 */
-	private static function validateMethodCallback($callback)
+	static private function validateMethodCallback($callback)
 	{
 		try {
 			$method = new ReflectionMethod($callback);
-			$class = $method->getDeclaringClass();
+			$class  = $method->getDeclaringClass();
 		} catch (ReflectionException $e) {
-			self::$messages[] = 'Continue. Method ' . $callback . ' doesn\'t exist.';
+			self::$messages[] = sprintf(
+				'Continue. Method %s does not exist.',
+				$callback
+			);
 			self::triggerContinue();
 		}
 
-		if (!$class->isSubclassOf('MoorBaseController')) {
-			self::$messages[] = 'Continue. Class for method ' . $callback . '. isn\'t a subclass of MoorAbstractController.';
+		if (!$class->isSubclassOf('MoorBaseController') && $class->getName() != __CLASS__) {
+			self::$messages[] = sprintf(
+				'Continue. Class for method %s is not a subclass of MoorBaseController.',
+				$callback
+			);echo $class;
+
 			self::triggerContinue();
 		}
 
 		if (strpos($method->getName(), '__') === 0) {
-			self::$messages[] = 'Continue. Method ' . $callback . ' looks like magic method.';
+			self::$messages[] = sprintf(
+				'Continue. Method %s looks like magic method.',
+				$callback
+			);
 			self::triggerContinue();
 		}
 
 		if (!$method->isPublic()) {
-			self::$messages[] = 'Continue. Method ' . $callback . ' isn\'t public.';
+			self::$messages[] = sprintf(
+				'Continue. Method %s is not public.',
+				$callback
+			);
 			self::triggerContinue();
 		}
 	}
@@ -1335,18 +1355,15 @@ class Moor {
 // = Exceptions =
 // ==============
 
-class MoorException extends Exception {}
+class MoorException           extends Exception     {}
 class MoorProgrammerException extends MoorException {}
-class MoorContinueException extends MoorException {}
-class MoorNotFoundException extends MoorException {}
+class MoorContinueException   extends MoorException {}
+class MoorNotFoundException   extends MoorException {}
 
 // ============
 // = Includes =
 // ============
 
-if (!class_exists('MoorBaseController', FALSE)) {
-	require 'MoorBaseController.php';
-}
 if (!class_exists('MoorAbtractController', FALSE)) {
 	require 'MoorAbstractController.php';
 }
