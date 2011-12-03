@@ -16,8 +16,8 @@ abstract class MoorAbstractController extends MoorBaseController
 	*
 	* @return void
 	*/
-	public function __construct(&$return_value = NULL) {
-		$return_value = call_user_func(array(
+	public function __construct() {
+		call_user_func(array(
 			$this, Moor::getActiveShortMethod()
 		));
 	}

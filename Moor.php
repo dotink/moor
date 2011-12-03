@@ -878,7 +878,7 @@ class Moor {
 				self::$messages[] = 'Instantiating class for ' . $callback_string;
 				$method           = Moor::getActiveShortMethod();
 				$controller       = new $class($return_value);
-				return $return_value;
+				return $controller;
 			} else {
 				self::$messages[] = 'Calling static method: ' . $callback_string;
 				return call_user_func(self::compat($callback_string));
