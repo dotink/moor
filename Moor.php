@@ -811,7 +811,7 @@ class Moor {
 				}
 			}
 
-			return FALSE;
+			self::triggerContinue();
 		}
 
 		self::$messages[] = sprintf(
