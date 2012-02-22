@@ -589,14 +589,25 @@ class Moor {
 		header('HTTP/1.1 404 Not Found');
 		header('Content-Type: text/html');
 
-		echo '<h1>NOT FOUND</h1>';
-
-		if (self::$debug) {
-			echo '<p>Chances are you have not configured or added any routes.</p>';
-			echo '<h2>Moor Debug</h2>';
-			echo "\n\n";
-			echo join("<br />\n", self::$messages);
-		}
+		?>
+			<html>
+				<head>
+					<title>Not Found</title>
+				</head>
+				<body>
+					<h1>NOT FOUND</h1>
+					<?php if (self::$debug) { ?>
+						<p>Chances are you have not configured or added any routes.</p>
+						<h2>Moor Debug</h2>
+						<ul>
+							<li>
+								<?php echo join('</li><li>', self::$messages); ?>
+							</li>
+						</ul>
+					<?php } ?>
+				</body>
+			</html>
+		<?php
 	}
 
 	/**
@@ -1318,8 +1329,9 @@ class Moor {
 			$class  = $method->getDeclaringClass();
 		} catch (ReflectionException $e) {
 			self::$messages[] = sprintf(
-				'Continue. Method %s does not exist.',
-				$callback
+				'Continue. Method %s does not exist; %s.',
+				$callback,
+				$e->getMessage()
 			);
 			self::triggerContinue();
 		}
