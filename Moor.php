@@ -586,7 +586,6 @@ class Moor {
 	 */
 	public static function routeNotFoundCallback()
 	{
-		header('HTTP/1.1 404 Not Found');
 		header('Content-Type: text/html');
 
 		echo '<h1>NOT FOUND</h1>';
@@ -637,6 +636,8 @@ class Moor {
 				break;
 			}
 		}
+
+		header('HTTP/1.1 404 Not Found');
 
 		self::$messages[] = 'No Valid Matches Found. Running Not Found callback: ' . self::$not_found_callback;
 
