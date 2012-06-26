@@ -584,8 +584,9 @@ class Moor {
 	 *
 	 * @return void
 	 */
-	public static function routeNotFoundCallback()
+	protected static function routeNotFoundCallback()
 	{
+		header('HTTP/1.1 404 Not Found');
 		header('Content-Type: text/html');
 
 		?>
@@ -648,15 +649,18 @@ class Moor {
 			}
 		}
 
-		header('HTTP/1.1 404 Not Found');
+		if (self::$not_found_callback !== NULL) {
+			self::$messages[] = sprintf(
+				'No Valid Matches Found. Running Not Found callback: %s',
+				self::$not_found_callback
+			);
 
-		self::$messages[] = 'No Valid Matches Found. Running Not Found callback: ' . self::$not_found_callback;
-
-		$route = (object) 'route';
-		$route->url      = self::parseUrl('*');
-		$route->callback = self::parseCallback(self::$not_found_callback);
-		$route->function = NULL;
-		return self::dispatchRoute($route);
+			$route = (object) 'route';
+			$route->url      = self::parseUrl('*');
+			$route->callback = self::parseCallback(self::$not_found_callback);
+			$route->function = NULL;
+			return self::dispatchRoute($route);
+		}
 	}
 
 	/**
