@@ -326,7 +326,7 @@ class Moor {
 		}
 
 		if (!empty($excluded_params)) {
-			// Remove any fragment so we can place it fter the query string
+			// Remove any fragment so we can place it after the query string
 			if (preg_match('/#.*$/', $url, $match)) {
 				$url = substr($url, 0, 0 - strlen($match[0]));
 			}
@@ -620,10 +620,12 @@ class Moor {
 		self::$running = TRUE;
 
 		if (!empty($_SERVER['PATH_INFO'])) {
-			self::$active_proxy_uri = str_replace($_SERVER['PATH_INFO'], '', $_SERVER['REQUEST_URI']);
-			self::$request_path     = urldecode(preg_replace('#\?.*$#', '', $_SERVER['PATH_INFO']));
+			$request_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+			self::$active_proxy_uri = str_replace($_SERVER['PATH_INFO'], '', $request_path);
+			self::$request_path     = urldecode(preg_replace('#\?.*$#',  '', $_SERVER['PATH_INFO']));
 		} else {
-			self::$request_path     = urldecode(preg_replace('#\?.*$#', '', $_SERVER['REQUEST_URI']));
+			self::$request_path     = urldecode(preg_replace('#\?.*$#',  '', $_SERVER['REQUEST_URI']));
 		}
 
 		$old_GET = $_GET;
