@@ -632,14 +632,6 @@ class Moor {
 		$_GET = array();
 
 		foreach(self::$routes as $route) {
-
-			//
-			// If a previous route set a header but triggered a continue, reset our default
-			// response to 200 OK
-			//
-
-			header($_SERVER['SERVER_PROTOCOL'] . ' 200 OK');
-
 			self::$active_callback = NULL;
 			self::$active_namespace = NULL;
 			self::$active_class = NULL;
