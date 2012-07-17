@@ -643,7 +643,15 @@ class Moor {
 			$_GET = $old_GET;
 
 			try {
-				return self::dispatchRoute($route);
+				$data = self::dispatchRoute($route);
+
+				//
+				// If we don't get any kind of exception, let's ensure we have a 200 OK header
+				//
+
+				header($_SERVER['SERVER_PROTOCOL'] . ' 200 OK');
+
+				return $data;
 			} catch (MoorContinueException $e) {
 				continue;
 			} catch (MoorNotFoundException $e) {
