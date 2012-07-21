@@ -264,7 +264,10 @@ class Moor {
 			}
 
 			if (!$best_route) {
-				throw new MoorProgrammerException('No link could be found for the callback ' . $callback_string);
+				throw new MoorProgrammerException(sprintf(
+					'No link could be found for the callback %s',
+					$callback_string
+				));
 			}
 
 			if ($best_route) {
@@ -532,15 +535,18 @@ class Moor {
 	/**
 	 * Assign a URL to a callback for routing
 	 *
-	 * @param  string          $url_string      The shorthand URL or regular expression pattern to match
-	 * @param  string|closure  $callback_string The callback to be run on a successful match, the name of the assoc. closure, or a closure
-	 * @param  closure         $function        An optional closure, named by the previous argument (for linking)
+	 * @param  string $url_string The shorthand URL or regular expression pattern to match
+	 * @param  string|closure $callback_string The callback to be run on a successful match, the name of the assoc. closure, or a closure
+	 * @param  closure $function An optional closure, named by the previous argument (for linking)
 	 * @return object The Moor instance for chaining
 	 */
 	static public function route($url_string, $callback_string, $function=NULL)
 	{
+		//
 		// reset caches using routes
-		self::$link_to = array();
+		//
+
+		self::$link_to   = array();
 		self::$params_to = array();
 
 		if (self::$running == TRUE) {
@@ -552,16 +558,18 @@ class Moor {
 		$url_string = self::$url_prefix . $url_string;
 
 		if ($callback_string instanceof Closure) {
-			$function = $callback_string;
+			$function        = $callback_string;
 			$callback_string = '';
 		}
 
-		$route = (object) 'route';
+		$route           = (object) 'route';
 		$route->url      = self::parseUrl($url_string);
 		$route->callback = self::parseCallback($callback_string);
 		$route->function = $function;
 
+		//
 		// validate that the url and callback use the same callback params
+		//
 
 		$diff = array_merge(
 			array_diff_key($route->callback->params, $route->url->callback_params),
@@ -569,9 +577,11 @@ class Moor {
 		);
 
 		if (count($diff)) {
-			throw new MoorProgrammerException(
-				'Route: ' . $route->url->scalar . ', url and callback have different callback params: ' . join(',', array_keys($diff))
-			);
+			throw new MoorProgrammerException(sprintf(
+				'Route: %s, url and callback have different callback params: %s',
+				$route->url->scalar,
+				join(', ', array_keys($diff))
+			));
 		}
 
 		array_push(self::$routes, $route);
@@ -584,7 +594,7 @@ class Moor {
 	 *
 	 * @return void
 	 */
-	protected static function routeNotFoundCallback()
+	static public function routeNotFoundCallback()
 	{
 		header('HTTP/1.1 404 Not Found');
 		header('Content-Type: text/html');
@@ -620,38 +630,32 @@ class Moor {
 		self::$running = TRUE;
 
 		if (!empty($_SERVER['PATH_INFO'])) {
-			$request_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-
+			$request_path           = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+			$path_info              = $_SERVER['PATH_INFO'];
 			self::$active_proxy_uri = str_replace($_SERVER['PATH_INFO'], '', $request_path);
-			self::$request_path     = urldecode(preg_replace('#\?.*$#',  '', $_SERVER['PATH_INFO']));
+			self::$request_path     = urldecode(preg_replace('#\?.*$#',  '', $path_info));
 		} else {
-			self::$request_path     = urldecode(preg_replace('#\?.*$#',  '', $_SERVER['REQUEST_URI']));
+			$request_path           = $_SERVER['REQUEST_URI'];
+			self::$request_path     = urldecode(preg_replace('#\?.*$#',  '', $request_path));
 		}
 
 		$old_GET = $_GET;
-		$_GET = array();
+		$_GET    = array();
 
 		foreach(self::$routes as $route) {
-			self::$active_callback = NULL;
-			self::$active_namespace = NULL;
-			self::$active_class = NULL;
-			self::$active_short_class = NULL;
-			self::$active_method = NULL;
+
+			self::$active_callback     = NULL;
+			self::$active_namespace    = NULL;
+			self::$active_class        = NULL;
+			self::$active_short_class  = NULL;
+			self::$active_method       = NULL;
 			self::$active_short_method = NULL;
-			self::$active_function = NULL;
+			self::$active_function     = NULL;
 
 			$_GET = $old_GET;
 
 			try {
-				$data = self::dispatchRoute($route);
-
-				//
-				// If we don't get any kind of exception, let's ensure we have a 200 OK header
-				//
-
-				header($_SERVER['SERVER_PROTOCOL'] . ' 200 OK');
-
-				return $data;
+				return self::dispatchRoute($route);
 			} catch (MoorContinueException $e) {
 				continue;
 			} catch (MoorNotFoundException $e) {
@@ -660,15 +664,17 @@ class Moor {
 		}
 
 		if (self::$not_found_callback !== NULL) {
+
 			self::$messages[] = sprintf(
 				'No Valid Matches Found. Running Not Found callback: %s',
 				self::$not_found_callback
 			);
 
-			$route = (object) 'route';
+			$route           = (object) 'route';
 			$route->url      = self::parseUrl('*');
 			$route->callback = self::parseCallback(self::$not_found_callback);
 			$route->function = NULL;
+
 			return self::dispatchRoute($route);
 		}
 	}
